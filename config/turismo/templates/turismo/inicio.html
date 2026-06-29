@@ -1,0 +1,31 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Inicio - Turismo Quillabamba{% endblock %}
+
+{% block content %}
+<div class="hero text-center">
+    <h1><i class="bi bi-compass-fill"></i> Turismo Quillabamba</h1>
+    <p class="lead">Descubre los mejores paquetes turísticos para la Convención de Turismo</p>
+    <a href="{% url 'lista_paquetes' %}" class="btn btn-success btn-lg">Ver Paquetes</a>
+</div>
+
+<h3 class="text-center mb-4">🌄 Paquetes Destacados</h3>
+<div class="row">
+    {% for paquete in paquetes_recientes %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <span class="badge bg-success mb-2">{{ paquete.get_categoria_display }}</span>
+                <h5 class="card-title">{{ paquete.nombre }}</h5>
+                <p class="card-text">{{ paquete.descripcion|truncatewords:15 }}</p>
+                <p><strong>S/. {{ paquete.precio_por_persona }}</strong> / persona</p>
+                <p><small>{{ paquete.duracion_dias }} días</small></p>
+                <a href="{% url 'detalle_paquete' paquete.id %}" class="btn btn-success w-100">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No hay paquetes disponibles</p>
+    {% endfor %}
+</div>
+{% endblock %}

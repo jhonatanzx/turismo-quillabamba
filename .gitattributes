@@ -1,0 +1,45 @@
+# Configuración de saltos de línea
+* text=auto
+
+# Archivos de Python
+*.py text eol=lf
+*.pyw text eol=lf
+
+# Archivos web
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+
+# Archivos de configuración
+*.txt text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.conf text eol=lf
+
+# Archivos de shell scripts (Linux)
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Archivos de Windows
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Archivos binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.sqlite3 binary
+

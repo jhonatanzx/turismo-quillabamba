@@ -1,0 +1,46 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Entornos virtuales
+entorno/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Base de datos
+*.sqlite3
+db.sqlite3
+
+# Archivos de Django
+media/
+staticfiles/
+*.pot
+*.mo
+local_settings.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de configuración local
+*.local
+*.secret

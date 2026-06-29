@@ -1,0 +1,36 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Detalle Reserva #{{ reserva.id }}{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-ticket"></i> Detalle de Reserva #{{ reserva.id }}</h2>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Paquete:</strong> {{ reserva.paquete.nombre }}</p>
+                <p><strong>Cliente:</strong> {{ reserva.cliente.nombres }} {{ reserva.cliente.apellidos }}</p>
+                <p><strong>Fecha de Viaje:</strong> {{ reserva.fecha_viaje }}</p>
+                <p><strong>Número de Personas:</strong> {{ reserva.numero_personas }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Precio Total:</strong> S/. {{ reserva.precio_total }}</p>
+                <p><strong>Estado:</strong>
+                    <span class="badge bg-{% if reserva.estado == 'CONFIRMADA' %}success{% elif reserva.estado == 'CANCELADA' %}danger{% else %}warning{% endif %}">
+                        {{ reserva.get_estado_display }}
+                    </span>
+                </p>
+                <p><strong>Fecha Reserva:</strong> {{ reserva.fecha_reserva }}</p>
+                {% if reserva.observaciones %}
+                <p><strong>Observaciones:</strong> {{ reserva.observaciones }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{% url 'mis_reservas' %}" class="btn btn-secondary">Volver</a>
+        {% if reserva.estado != 'CANCELADA' %}
+        <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn btn-danger">Cancelar Reserva</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

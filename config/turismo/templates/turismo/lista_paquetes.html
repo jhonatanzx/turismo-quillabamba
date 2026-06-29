@@ -1,0 +1,43 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Paquetes Turísticos{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-grid"></i> Paquetes Turísticos</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-6">
+        <input type="text" name="busqueda" class="form-control" placeholder="Buscar paquetes..." value="{{ request.GET.busqueda }}">
+    </div>
+    <div class="col-md-4">
+        <select name="categoria" class="form-select">
+            <option value="">Todas las categorías</option>
+            {% for key, value in categorias %}
+            <option value="{{ key }}" {% if request.GET.categoria == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">Buscar</button>
+    </div>
+</form>
+
+<div class="row">
+    {% for paquete in paquetes %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <span class="badge bg-success mb-2">{{ paquete.get_categoria_display }}</span>
+                <h5 class="card-title">{{ paquete.nombre }}</h5>
+                <p class="card-text">{{ paquete.descripcion|truncatewords:15 }}</p>
+                <p><strong>S/. {{ paquete.precio_por_persona }}</strong> / persona</p>
+                <p><small>{{ paquete.duracion_dias }} días</small></p>
+                <a href="{% url 'detalle_paquete' paquete.id %}" class="btn btn-success w-100">Ver Detalles</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No hay paquetes disponibles</p>
+    {% endfor %}
+</div>
+{% endblock %}

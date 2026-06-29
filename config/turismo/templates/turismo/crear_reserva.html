@@ -1,0 +1,32 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Reservar - {{ paquete.nombre }}{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-ticket"></i> Reservar: {{ paquete.nombre }}</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success w-100">Confirmar Reserva</button>
+                </form>
+                <a href="{% url 'detalle_paquete' paquete.id %}" class="btn btn-secondary w-100 mt-2">Cancelar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>Resumen</h5>
+                <p><strong>Paquete:</strong> {{ paquete.nombre }}</p>
+                <p><strong>Precio por persona:</strong> S/. {{ paquete.precio_por_persona }}</p>
+                <p class="text-muted">El precio total se calculará automáticamente al confirmar</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

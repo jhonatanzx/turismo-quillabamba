@@ -1,0 +1,79 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Reporte de Reservas{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-clipboard-data"></i> Reporte de Reservas</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5>Total Reservas</h5>
+                <h3>{{ total_reservas }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5>Total Ingresos</h5>
+                <h3>S/. {{ total_ingresos }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+        <select name="estado" class="form-select">
+            <option value="">Todos los estados</option>
+            {% for key, value in estados %}
+            <option value="{{ key }}" {% if request.GET.estado == key %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">Filtrar</button>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Paquete</th>
+                <th>Fecha Viaje</th>
+                <th>Personas</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Fecha Reserva</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+            <tr>
+                <td>#{{ reserva.id }}</td>
+                <td>{{ reserva.cliente.nombres }} {{ reserva.cliente.apellidos }}</td>
+                <td>{{ reserva.paquete.nombre }}</td>
+                <td>{{ reserva.fecha_viaje }}</td>
+                <td>{{ reserva.numero_personas }}</td>
+                <td>S/. {{ reserva.precio_total }}</td>
+                <td>
+                    <span class="badge bg-{% if reserva.estado == 'CONFIRMADA' %}success{% elif reserva.estado == 'CANCELADA' %}danger{% else %}warning{% endif %}">
+                        {{ reserva.get_estado_display }}
+                    </span>
+                </td>
+                <td>{{ reserva.fecha_reserva|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-center">No hay reservas registradas</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

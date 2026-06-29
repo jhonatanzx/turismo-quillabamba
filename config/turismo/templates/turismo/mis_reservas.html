@@ -1,0 +1,49 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-list"></i> Mis Reservas</h2>
+
+{% if reservas %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Paquete</th>
+                <th>Fecha Viaje</th>
+                <th>Personas</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+            <tr>
+                <td>#{{ reserva.id }}</td>
+                <td>{{ reserva.paquete.nombre }}</td>
+                <td>{{ reserva.fecha_viaje }}</td>
+                <td>{{ reserva.numero_personas }}</td>
+                <td>S/. {{ reserva.precio_total }}</td>
+                <td>
+                    <span class="badge bg-{% if reserva.estado == 'CONFIRMADA' %}success{% elif reserva.estado == 'CANCELADA' %}danger{% else %}warning{% endif %}">
+                        {{ reserva.get_estado_display }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'detalle_reserva' reserva.id %}" class="btn btn-sm btn-info">Ver</a>
+                    {% if reserva.estado != 'CANCELADA' %}
+                    <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn btn-sm btn-danger">Cancelar</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<p class="text-center">No tienes reservas aún. <a href="{% url 'lista_paquetes' %}">Explora nuestros paquetes</a></p>
+{% endif %}
+{% endblock %}

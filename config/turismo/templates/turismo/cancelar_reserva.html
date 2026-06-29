@@ -1,0 +1,32 @@
+{% extends 'turismo/base.html' %}
+
+{% block title %}Cancelar Reserva #{{ reserva.id }}{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-x-circle"></i> Cancelar Reserva</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5>⚠️ Confirmar Cancelación</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Paquete:</strong> {{ reserva.paquete.nombre }}</p>
+                <p><strong>Fecha Viaje:</strong> {{ reserva.fecha_viaje }}</p>
+                <p><strong>Estado actual:</strong> {{ reserva.get_estado_display }}</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Motivo de cancelación</label>
+                        <textarea name="motivo" class="form-control" rows="3" required>Cancelado por el cliente</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Confirmar Cancelación</button>
+                    <a href="{% url 'detalle_reserva' reserva.id %}" class="btn btn-secondary">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
