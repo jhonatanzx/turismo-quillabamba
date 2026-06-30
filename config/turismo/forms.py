@@ -1,36 +1,42 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from .models import Reserva, Cliente
+from django.core.exceptions import ValidationError
 from datetime import date
-
-class RegistroForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True, label='Nombres')
-    last_name = forms.CharField(max_length=30, required=True, label='Apellidos')
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-
 
 class ReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
-        fields = ['fecha_viaje', 'numero_personas', 'observaciones']
+        fields = ['fecha_inicio', 'numero_personas', 'observaciones']
         widgets = {
-            'fecha_viaje': forms.DateInput(attrs={'type': 'date'}),
-            'observaciones': forms.Textarea(attrs={'rows': 3}),
+            'fecha_inicio': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'observaciones': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+            'numero_personas': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
         }
-
-    def clean_fecha_viaje(self):
-        fecha = self.cleaned_data['fecha_viaje']
+    
+    def clean_fecha_inicio(self):
+        fecha = self.cleaned_data['fecha_inicio']
         if fecha < date.today():
-            raise forms.ValidationError('La fecha de viaje no puede ser en el pasado')
+            raise ValidationError('La fecha de inicio no puede ser en el pasado')
         return fecha
-
+    
+    def clean_numero_personas(self):
+        num = self.cleaned_data['numero_personas']
+        if num < 1:
+            raise ValidationError('Debe ser al menos 1 persona')
+        if num > 20:
+            raise ValidationError('Máximo 20 personas por reserva')
+        return num
 
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['tipo_documento', 'numero_documento', 'telefono', 'direccion']
+        fields = ['tipo_documento', 'numero_documento', 'nombres', 'apellidos', 'telefono', 'email', 'direccion']
+        widgets = {
+            'tipo_documento': forms.Select(attrs={'class': 'form-control'}),
+            'numero_documento': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombres': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellidos': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'direccion': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+        }

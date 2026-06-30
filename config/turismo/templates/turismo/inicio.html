@@ -1,31 +1,254 @@
 {% extends 'turismo/base.html' %}
+{% load static %}
 
 {% block title %}Inicio - Turismo Quillabamba{% endblock %}
 
 {% block content %}
-<div class="hero text-center">
-    <h1><i class="bi bi-compass-fill"></i> Turismo Quillabamba</h1>
-    <p class="lead">Descubre los mejores paquetes turísticos para la Convención de Turismo</p>
-    <a href="{% url 'lista_paquetes' %}" class="btn btn-success btn-lg">Ver Paquetes</a>
+
+<!-- ========== HERO CON IMAGEN ========== -->
+<div style="
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('http://127.0.0.1:8000/static/images/hero/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+">
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    "></div>
+    
+    <div style="position: relative; z-index: 2; max-width: 800px;">
+        <h1 style="
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        ">
+            Descubre <span style="color: #FFD54F;">Quillabamba</span>
+        </h1>
+        <p style="
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        ">
+            Vive una experiencia única en la selva alta cusqueña.
+        </p>
+        <a href="/paquetes/" style="
+            display: inline-block;
+            padding: 15px 45px;
+            background: #FF6F00;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+        " onmouseover="this.style.transform='scale(1.05)'; this.style.background='#E65100'"
+           onmouseout="this.style.transform='scale(1)'; this.style.background='#FF6F00'">
+            <i class="bi bi-search me-2"></i> Ver Paquetes
+        </a>
+    </div>
 </div>
 
-<h3 class="text-center mb-4">🌄 Paquetes Destacados</h3>
-<div class="row">
-    {% for paquete in paquetes_recientes %}
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-                <span class="badge bg-success mb-2">{{ paquete.get_categoria_display }}</span>
-                <h5 class="card-title">{{ paquete.nombre }}</h5>
-                <p class="card-text">{{ paquete.descripcion|truncatewords:15 }}</p>
-                <p><strong>S/. {{ paquete.precio_por_persona }}</strong> / persona</p>
-                <p><small>{{ paquete.duracion_dias }} días</small></p>
-                <a href="{% url 'detalle_paquete' paquete.id %}" class="btn btn-success w-100">Ver Detalles</a>
+<!-- ========== CATEGORÍAS CON ENLACES FUNCIONALES ========== -->
+<section style="padding: 60px 0; background: white;">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 50px; color: #1B3A1B; font-weight: 700;">
+            <i class="bi bi-tags" style="color: #2E7D32; margin-right: 10px;"></i> Explora por Categoría
+        </h2>
+        <div class="row g-4">
+            <!-- Aventura -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/paquetes/?categoria=AVENTURA" style="text-decoration: none; color: inherit;">
+                    <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease; cursor: pointer; height: 100%;" 
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                        <i class="bi bi-tree" style="font-size: 3.5rem; color: #2E7D32; margin-bottom: 15px;"></i>
+                        <h5 style="font-weight: 600; color: #1B3A1B;">Aventura</h5>
+                    </div>
+                </a>
+            </div>
+            <!-- Cultural -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/paquetes/?categoria=CULTURAL" style="text-decoration: none; color: inherit;">
+                    <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease; cursor: pointer; height: 100%;"
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                        <i class="bi bi-building" style="font-size: 3.5rem; color: #2E7D32; margin-bottom: 15px;"></i>
+                        <h5 style="font-weight: 600; color: #1B3A1B;">Cultural</h5>
+                    </div>
+                </a>
+            </div>
+            <!-- Naturaleza -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/paquetes/?categoria=NATURALEZA" style="text-decoration: none; color: inherit;">
+                    <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease; cursor: pointer; height: 100%;"
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                        <i class="bi bi-flower2" style="font-size: 3.5rem; color: #2E7D32; margin-bottom: 15px;"></i>
+                        <h5 style="font-weight: 600; color: #1B3A1B;">Naturaleza</h5>
+                    </div>
+                </a>
+            </div>
+            <!-- Gastronómico -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/paquetes/?categoria=GASTRONOMICO" style="text-decoration: none; color: inherit;">
+                    <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease; cursor: pointer; height: 100%;"
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                        <i class="bi bi-cup-hot" style="font-size: 3.5rem; color: #2E7D32; margin-bottom: 15px;"></i>
+                        <h5 style="font-weight: 600; color: #1B3A1B;">Gastronómico</h5>
+                    </div>
+                </a>
+            </div>
+            <!-- Religioso - CON CRUZ (bi-cross) -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/paquetes/?categoria=RELIGIOSO" style="text-decoration: none; color: inherit;">
+                    <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease; cursor: pointer; height: 100%;"
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                        <i class="bi bi-cross" style="font-size: 3.5rem; color: #2E7D32; margin-bottom: 15px;"></i>
+                        <h5 style="font-weight: 600; color: #1B3A1B;">Religioso</h5>
+                    </div>
+                </a>
+            </div>
+            <!-- Todo Incluido -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="/paquetes/?categoria=TODO_INCLUIDO" style="text-decoration: none; color: inherit;">
+                    <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease; cursor: pointer; height: 100%;"
+                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                        <i class="bi bi-star" style="font-size: 3.5rem; color: #2E7D32; margin-bottom: 15px;"></i>
+                        <h5 style="font-weight: 600; color: #1B3A1B;">Todo Incluido</h5>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-    {% empty %}
-    <p class="text-center">No hay paquetes disponibles</p>
-    {% endfor %}
-</div>
+</section>
+
+<!-- ========== PAQUETES DESTACADOS ========== -->
+<section style="padding: 60px 0; background: #F1F8E9;">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 50px; color: #1B3A1B; font-weight: 700;">
+            <i class="bi bi-backpack" style="color: #2E7D32; margin-right: 10px;"></i> Paquetes Destacados
+        </h2>
+        <div class="row g-4">
+            {% for paquete in paquetes %}
+            <div class="col-md-6 col-lg-4">
+                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: all 0.4s ease; height: 100%; position: relative;"
+                     onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(0,0,0,0.1)'">
+                    {% if paquete.imagen_principal %}
+                    <img src="{{ paquete.imagen_principal.url }}" style="height: 250px; width: 100%; object-fit: cover;" alt="{{ paquete.nombre }}">
+                    {% else %}
+                    <img src="/static/images/paquetes/default.jpg" style="height: 250px; width: 100%; object-fit: cover;" alt="Imagen por defecto">
+                    {% endif %}
+                    <span style="position: absolute; top: 15px; right: 15px; padding: 8px 18px; border-radius: 25px; background: rgba(0,0,0,0.7); color: white; font-size: 0.8rem; font-weight: 600;">
+                        {{ paquete.get_categoria_display }}
+                    </span>
+                    <div style="padding: 25px;">
+                        <h5 style="font-size: 1.3rem; font-weight: 700; color: #1B3A1B; margin-bottom: 10px;">{{ paquete.nombre }}</h5>
+                        <p style="color: #666; font-size: 0.95rem; line-height: 1.6;">{{ paquete.descripcion|truncatewords:15 }}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                            <div>
+                                <span style="font-size: 2rem; font-weight: 800; color: #2E7D32;">S/{{ paquete.precio_por_persona }}</span>
+                                <small style="font-size: 0.9rem; font-weight: 400; color: #999;">/ persona</small>
+                            </div>
+                            <span style="padding: 5px 15px; border-radius: 20px; background: {% if paquete.cupos_disponibles > 0 %}#28a745{% else %}#dc3545{% endif %}; color: white; font-size: 0.8rem;">
+                                {{ paquete.cupos_disponibles }} cupos
+                            </span>
+                        </div>
+                        <a href="/paquete/{{ paquete.pk }}/" style="display: block; width: 100%; padding: 10px; margin-top: 15px; text-align: center; background: #2E7D32; color: white; border: none; border-radius: 25px; text-decoration: none; transition: all 0.3s ease;"
+                           onmouseover="this.style.background='#1B5E20'" onmouseout="this.style.background='#2E7D32'">
+                            <i class="bi bi-eye me-2"></i> Ver Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-emoji-frown" style="font-size: 4rem; color: #ccc;"></i>
+                <p style="margin-top: 15px; color: #999;">No hay paquetes disponibles en este momento.</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="/paquetes/" style="display: inline-block; padding: 15px 50px; border: 2px solid #2E7D32; color: #2E7D32; border-radius: 30px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;"
+               onmouseover="this.style.background='#2E7D32'; this.style.color='white'" 
+               onmouseout="this.style.background='transparent'; this.style.color='#2E7D32'">
+                Ver todos los paquetes <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TESTIMONIOS ========== -->
+<section style="padding: 60px 0; background: white;">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 50px; color: #1B3A1B; font-weight: 700;">
+            <i class="bi bi-quote" style="color: #2E7D32; margin-right: 10px;"></i> Lo que dicen nuestros viajeros
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <p style="margin-top: 15px; font-style: italic;">"Una experiencia inolvidable. La naturaleza de Quillabamba es impresionante."</p>
+                    <p style="font-weight: 700; margin-bottom: 0;">- María G.</p>
+                    <small style="color: #999;">Aventura en la Selva</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <p style="margin-top: 15px; font-style: italic;">"Excelente atención y los guías son muy profesionales. ¡Volveré!"</p>
+                    <p style="font-weight: 700; margin-bottom: 0;">- Carlos R.</p>
+                    <small style="color: #999;">Tour Cultural</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="text-align: center; padding: 30px 20px; border-radius: 15px; background: #F1F8E9; transition: all 0.3s ease;"
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 30px rgba(0,0,0,0.2)'; this.style.background='white'"
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.background='#F1F8E9'">
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <i class="bi bi-star-fill" style="color: #FFD54F;"></i>
+                    <p style="margin-top: 15px; font-style: italic;">"La ruta del café es fascinante. Quillabamba tiene un encanto especial."</p>
+                    <p style="font-weight: 700; margin-bottom: 0;">- Ana P.</p>
+                    <small style="color: #999;">Ruta del Café</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

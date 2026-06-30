@@ -1,49 +1,63 @@
 {% extends 'turismo/base.html' %}
+{% load static %}
 
-{% block title %}Mis Reservas{% endblock %}
+{% block title %}Mis Reservas - Turismo Quillabamba{% endblock %}
 
 {% block content %}
-<h2><i class="bi bi-list"></i> Mis Reservas</h2>
-
-{% if reservas %}
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Paquete</th>
-                <th>Fecha Viaje</th>
-                <th>Personas</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for reserva in reservas %}
-            <tr>
-                <td>#{{ reserva.id }}</td>
-                <td>{{ reserva.paquete.nombre }}</td>
-                <td>{{ reserva.fecha_viaje }}</td>
-                <td>{{ reserva.numero_personas }}</td>
-                <td>S/. {{ reserva.precio_total }}</td>
-                <td>
-                    <span class="badge bg-{% if reserva.estado == 'CONFIRMADA' %}success{% elif reserva.estado == 'CANCELADA' %}danger{% else %}warning{% endif %}">
-                        {{ reserva.get_estado_display }}
-                    </span>
-                </td>
-                <td>
-                    <a href="{% url 'detalle_reserva' reserva.id %}" class="btn btn-sm btn-info">Ver</a>
-                    {% if reserva.estado != 'CANCELADA' %}
-                    <a href="{% url 'cancelar_reserva' reserva.id %}" class="btn btn-sm btn-danger">Cancelar</a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="bi bi-ticket-perforated"></i> Mis Reservas</h2>
+    
+    {% if reservas %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Paquete</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Personas</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                <tr>
+                    <td><strong>{{ reserva.codigo_reserva }}</strong></td>
+                    <td>{{ reserva.paquete.nombre }}</td>
+                    <td>{{ reserva.fecha_inicio|date:"d/m/Y" }}</td>
+                    <td>{{ reserva.fecha_fin|date:"d/m/Y" }}</td>
+                    <td>{{ reserva.numero_personas }}</td>
+                    <td>S/ {{ reserva.precio_total }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if reserva.estado == 'CONFIRMADA' %}bg-success
+                            {% elif reserva.estado == 'PENDIENTE' %}bg-warning
+                            {% elif reserva.estado == 'CANCELADA' %}bg-danger
+                            {% elif reserva.estado == 'PAGADA' %}bg-info
+                            {% else %}bg-secondary{% endif %}">
+                            {{ reserva.get_estado_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/reserva/{{ reserva.codigo_reserva }}/" class="btn btn-sm btn-primary">Ver</a>
+                        {% if reserva.estado != 'CANCELADA' %}
+                        <a href="/reserva/{{ reserva.codigo_reserva }}/cancelar/" class="btn btn-sm btn-danger">Cancelar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-emoji-frown" style="font-size: 4rem; color: #ccc;"></i>
+        <p class="mt-3">No tienes reservas aún.</p>
+        <a href="/paquetes/" class="btn btn-success">Explora nuestros paquetes</a>
+    </div>
+    {% endif %}
 </div>
-{% else %}
-<p class="text-center">No tienes reservas aún. <a href="{% url 'lista_paquetes' %}">Explora nuestros paquetes</a></p>
-{% endif %}
 {% endblock %}

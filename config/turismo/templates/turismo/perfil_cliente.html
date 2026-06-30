@@ -1,0 +1,81 @@
+{% extends 'turismo/base.html' %}
+{% load static %}
+
+{% block title %}Mi Perfil - Turismo Quillabamba{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="bi bi-person-circle"></i> Mi Perfil</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_nombres" class="form-label">Nombres</label>
+                                {{ form.nombres }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_apellidos" class="form-label">Apellidos</label>
+                                {{ form.apellidos }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_tipo_documento" class="form-label">Tipo de Documento</label>
+                                {{ form.tipo_documento }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_numero_documento" class="form-label">Número de Documento</label>
+                                {{ form.numero_documento }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_telefono" class="form-label">Teléfono</label>
+                                {{ form.telefono }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_email" class="form-label">Email</label>
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_direccion" class="form-label">Dirección</label>
+                            {{ form.direccion }}
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card mt-4 shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="bi bi-shield-lock"></i> Seguridad</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">
+                        <a href="/accounts/password_change/" class="btn btn-outline-primary">
+                            <i class="bi bi-key"></i> Cambiar Contraseña
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

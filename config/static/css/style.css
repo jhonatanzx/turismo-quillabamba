@@ -1,0 +1,264 @@
+/* ============================================
+   TURISMO QUILLABAMBA - ESTILOS PRINCIPALES
+   ============================================ */
+
+/* ---------- Variables y colores ---------- */
+:root {
+    --primary-color: #2E7D32;
+    --secondary-color: #4CAF50;
+    --accent-color: #FF6F00;
+    --dark-color: #1B3A1B;
+    --light-color: #F1F8E9;
+    --text-color: #333333;
+    --white: #FFFFFF;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.2);
+    --border-radius: 15px;
+}
+
+/* ---------- Reset y base ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: var(--light-color);
+    overflow-x: hidden;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    background: linear-gradient(135deg, var(--dark-color), var(--primary-color)) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white) !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand i {
+    color: #FFD54F;
+    margin-right: 10px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 20px !important;
+    border-radius: 25px;
+}
+
+.nav-link:hover {
+    color: var(--white) !important;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* ---------- Hero / Banner ---------- */
+.hero-section {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(27, 58, 27, 0.85), rgba(46, 125, 50, 0.75)), 
+            url('http://127.0.0.1:8000/static/images/hero/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--white);
+    text-align: center;
+    padding: 100px 20px;
+    margin-bottom: 50px;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    z-index: 0;
+}
+
+.hero-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    animation: fadeInDown 1s ease;
+}
+
+.hero-title span {
+    color: #FFD54F;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease 0.3s both;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 15px 45px;
+    background: linear-gradient(135deg, #FF6F00, #F57C00);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 111, 0, 0.4);
+    animation: fadeInUp 1s ease 0.6s both;
+}
+
+.hero-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 111, 0, 0.6);
+    color: var(--white);
+}
+
+/* ---------- Animaciones ---------- */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Tarjetas de Paquetes ---------- */
+.paquete-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    height: 100%;
+    position: relative;
+}
+
+.paquete-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.paquete-card .card-img-top {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.paquete-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.paquete-card .card-body {
+    padding: 25px;
+}
+
+.paquete-card .card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.paquete-card .card-text {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.paquete-card .badge-categoria {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 8px 18px;
+    border-radius: 25px;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+}
+
+.paquete-card .precio {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.paquete-card .precio small {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #999;
+}
+
+/* ---------- Sección de categorías ---------- */
+.categorias-section {
+    padding: 60px 0;
+    background: var(--white);
+}
+
+.categoria-item {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: var(--border-radius);
+    background: var(--light-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.categoria-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    background: var(--white);
+}
+
+.categoria-item i {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.categoria-item h5 {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* ---------- Footer ---------- */

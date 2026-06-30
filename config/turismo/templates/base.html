@@ -1,56 +1,152 @@
+cat > ~/Documentos/turismo_quillabamba/config/turismo/templates/turismo/base.html << 'EOF'
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Cafetería</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Turismo Quillabamba{% endblock %}</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-<div class="container mt-4">
+<!-- ========== NAVBAR ========== -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-compass-fill"></i> Turismo Quillabamba
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="bi bi-house"></i> Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/paquetes/">
+                        <i class="bi bi-backpack"></i> Paquetes
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/mis-reservas/">
+                        <i class="bi bi-ticket-perforated"></i> Mis Reservas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/perfil/">
+                        <i class="bi bi-person-circle"></i> {{ user.username }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/logout/">
+                        <i class="bi bi-box-arrow-right"></i> Salir
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/accounts/login/">
+                        <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-warning text-dark px-4 rounded-pill" href="/registro/">
+                        <i class="bi bi-person-plus"></i> Registrarse
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
 
-    {% if request.path != '/login/' %}
+<!-- ========== CONTENIDO ========== -->
+<main>
+    <div class="container mt-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm border-0 rounded-3" role="alert">
+                    <i class="bi bi-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %} me-2"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-        <nav class="mb-3">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
 
-            <a href="/inicio/" class="btn btn-outline-primary">
-                Inicio
-            </a>
-
-            <a href="/productos/" class="btn btn-outline-primary">
-                Productos
-            </a>
-
-            <a href="/carrito/" class="btn btn-outline-primary">
-                Carrito
-            </a>
-
-            <a href="/mis-pedidos/" class="btn btn-outline-primary">
-                Mis pedidos
-            </a>
-            <a href="/reporte-ventas/" class="btn btn-outline-success">
-            Reporte ventas
-            </a>
-
-        </nav>
-
-        <hr>
-
-    {% endif %}
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <h5><i class="bi bi-compass-fill text-warning"></i> Turismo Quillabamba</h5>
+                <p class="text-light opacity-75">
+                    Descubre la magia de la selva alta cusqueña.
+                </p>
+                <div class="social-links mt-3">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-youtube"></i></a>
+                    <a href="#"><i class="bi bi-whatsapp"></i></a>
+                </div>
             </div>
-        {% endfor %}
-    {% endif %}
+            <div class="col-md-4">
+                <h5>Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/paquetes/"><i class="bi bi-chevron-right"></i> Paquetes</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="/mis-reservas/"><i class="bi bi-chevron-right"></i> Mis Reservas</a></li>
+                    {% else %}
+                    <li><a href="/accounts/login/"><i class="bi bi-chevron-right"></i> Iniciar Sesión</a></li>
+                    <li><a href="/registro/"><i class="bi bi-chevron-right"></i> Registrarse</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-geo-alt text-warning"></i> Quillabamba, La Convención</li>
+                    <li><i class="bi bi-phone text-warning"></i> +51 984 123 456</li>
+                    <li><i class="bi bi-envelope text-warning"></i> info@turismoquillabamba.pe</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-light opacity-25 my-4">
+        
+        <!-- FOOTER CON COPYRIGHT 2026 Y TRIPLE-J-DEVELOPERS -->
+        <div class="text-center">
+            <p class="text-light mb-0">
+                &copy; 2026 - Turismo Quillabamba. 
+                <span class="text-warning">Todos los derechos reservados.</span>
+            </p>
+            <p class="text-light opacity-50 small mb-0 mt-1">
+                Desarrollado por <span class="text-warning fw-bold">TRIPLE-J-DEVELOPERS</span>
+            </p>
+        </div>
+    </div>
+</footer>
 
-    {% block content %}
-    {% endblock %}
-
-</div>
+<!-- ========== SCRIPTS ========== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
 
 </body>
 </html>
+EOF
